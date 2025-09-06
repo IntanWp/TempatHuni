@@ -1,0 +1,206 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap");
+
+:root{
+    --red : #A71F4B;
+    --pink:#fff6f8;
+    --white:#ffffff;
+    --gray :#333;
+}
+
+
+body {
+  margin: 0;
+  font-family: "Merriweather", serif;
+  color: #4a4a4a;
+  background-color: #f1e3e3;
+  display: flex; /* Untuk memusatkan .payment-container */
+  justify-content: center; /* Untuk memusatkan .payment-container */
+  align-items: flex-start; /* Untuk memposisikan di bagian atas */
+  min-height: 100vh; /* Memastikan body mengisi seluruh tinggi viewport */
+  padding: 40px 0; /* Padding vertikal agar konten tidak terlalu mepet tepi */
+  box-sizing: border-box; /* Memastikan padding termasuk dalam tinggi total */
+}
+
+.payment-container {
+  background: white;
+  max-width: 700px;
+  width: 90%; /* Menggunakan persentase untuk responsivitas */
+  /* margin: 40px auto; (dihapus karena flexbox sudah menangani pemusatan) */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sedikit bayangan yang lebih kuat */
+  box-sizing: border-box; /* Memastikan padding termasuk dalam lebar total */
+}
+
+
+/* Aturan untuk gambar kost utama yang besar */
+.main-kost-image {
+  width: 100%; /* Agar gambar mengisi lebar container */
+  max-width: 400px; /* Batasi lebar maksimum gambar utama */
+  height: auto; /* Memastikan tinggi menyesuaikan proporsi */
+  display: block; /* Agar gambar menjadi elemen blok */
+  margin: 0 auto 30px; /* Pusatkan gambar dan beri margin bawah */
+  border-radius: 10px; /* Sudut melengkung */
+  object-fit: cover; /* Memastikan gambar terisi penuh tanpa terdistorsi */
+}
+
+.BackToHome {
+  font-weight: bold;
+  text-decoration: none;
+  display: flex;
+  margin-left: -1%;
+  margin-bottom: 2%;  
+}
+
+.BackToHome img {
+  width: 35px;
+  height: 35px;
+}
+
+.BackToHome p {
+  font-size: 20px;
+  margin-bottom: 0%;
+  margin-top: 0.7%;
+  color: black;
+}
+
+
+.kost-card {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: center; 
+  padding: 10px; /* Sedikit padding di dalam kartu */
+  background-color: #f9f9f9; /* Warna latar belakang untuk kost card */
+  border-radius: 8px;
+}
+
+/* Aturan untuk gambar kost yang lebih kecil di dalam .kost-card */
+.kost-image {
+  width: 80px; 
+  height: 80px; 
+  border-radius: 10px;
+  object-fit: cover; 
+}
+
+.kost-text h3 {
+  margin: 0;
+  color: var(--red);
+}
+
+.kost-text p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555; 
+}
+
+.input-group {
+  margin-bottom: 18px; /* Sedikit lebih banyak margin */
+}
+
+.input-group label {
+  display: block; 
+  margin-bottom: 8px; /* Lebih banyak margin bawah */
+  font-weight: bold;
+  color: #333;
+}
+
+.input-group input {
+  width: calc(100% - 20px); /* Menyesuaikan lebar input dengan padding */
+  padding: 10px; /* Lebih banyak padding untuk input */
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box; 
+  font-size: 16px; 
+  font-family: "Merriweather", serif; /* Menggunakan font Merriweather */
+}
+
+.document-section {
+  margin-top: 30px;
+  padding-top: 20px; /* Padding atas untuk pemisah */
+  border-top: 1px solid #eee; /* Garis pemisah */
+}
+
+.document-section h3 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.document-box {
+  background-color: #f5f5f5;
+  padding: 85px; /* Lebih banyak padding */
+  border-radius: 20px;
+  text-align: center;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  box-shadow: 2px 2px #ccc;
+}
+.document-box:hover{
+  background-color: #f1e3e3;
+}
+
+.doc-image {
+  max-width: 100px; /* Mengurangi ukuran gambar dokumen */
+  margin-bottom: 10px;
+}
+
+.document-box p {
+  font-weight: bold;
+  margin: 0;
+  color: var(--red); 
+}
+
+.rent-detail {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px; /* Padding atas untuk pemisah */
+  border-top: 1px solid #eee; /* Garis pemisah */
+}
+
+.rent-detail h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.rent-detail table {
+  margin: 0 auto 25px; /* Lebih banyak margin bawah */
+  text-align: left;
+  width: 100%; 
+  border-collapse: collapse; 
+}
+
+.rent-detail td {
+  padding: 12px 20px; /* Lebih banyak padding */
+  border-bottom: 1px solid #eee; 
+}
+
+.rent-detail tr:last-child td {
+    border-bottom: none; 
+}
+
+.red {
+  color: var(--red);
+  font-weight: bold;
+  font-size: 1.1em; /* Sedikit lebih besar untuk total */
+}
+
+.pay-btn {
+  background-color: var(--red);
+  color: white;
+  border: none;
+  padding: 15px 40px; /* Padding lebih besar */
+  border-radius: 8px; /* Sedikit lebih melengkung */
+  cursor: pointer;
+  font-size: 18px; /* Ukuran font lebih besar */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Transisi untuk transform */
+  width: 100%; /* Tombol memenuhi lebar container */
+  max-width: 300px; /* Batasi lebar tombol */
+  font-family: "Merriweather", serif; 
+}
+
+.pay-btn:hover {
+  background-color: var(--red); 
+  transform: translateY(-2px); /* Efek sedikit terangkat saat hover */
+}

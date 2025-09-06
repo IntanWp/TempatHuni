@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="payment-container">
+
+    <div class="info-section">
+      <a href="homepage-2.html" class="BackToHome">
+        <img src="./assetAOL/left-chevron.png" alt="Back to Home" />
+        <p>HomePage</p>
+      </a>
+
+      <div class="kost-card">
+        <img src="./assetAOL/kostan.jpg" class="kost-image" alt="kost image" />
+        <div class="kost-text">
+          <h3>Kostan Indah Permata</h3>
+          <p>Amsterdam, Bekasi</p>
+          <p>Kamar: AC, K. Mandi Dalam - Kunci Digital</p>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="buyerName">Buyer’s name</label>
+        <input type="text" id="buyerName" placeholder="Buyer’s name" />
+      </div>
+
+      <div class="input-group">
+        <label for="phone">Buyer’s telephone number</label>
+        <input type="text" id="phone" placeholder="Buyer’s telephone number" />
+      </div>
+    </div>
+
+    <div class="document-section">
+      <h3>Document Requirement</h3>
+      <div class="document-box">
+        <img src="./assetAOL/doc.jpg" class="doc-image" alt="ID Card Image" />
+        <p>ID CARD</p>
+      </div>
+    </div>
+
+    <div class="rent-detail">
+      <h3>Rent Detail Information</h3>
+      <table>
+        <tr><td>Price per month</td><td>RP. 1.500.000</td></tr>
+        <tr><td>Duration</td><td>3 months</td></tr>
+        <tr><td>Fee</td><td>RP. 15.000</td></tr>
+        <tr><td>Total</td><td class="red">RP. 4.515.000</td></tr>
+        <tr><td>Start Rent</td><td>Thursday, 20th Mei 2025</td></tr>
+      </table>
+      <button class="pay-btn">Payment</button>
+    </div>
+
+  </div>
+</body>
+<script src="payment2.js"></script>
+</html>

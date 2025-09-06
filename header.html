@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tes masukin header</title>
+<link rel="stylesheet" href="header.css">
+
+<!-- header nya ini full -->
+<header class="main-header">
+  <div class="header-left">
+      <a href="homepage.html"><img src="./assetAOL/logo.png" alt="logo" class="footer-logo" /></a>
+  </div>
+  
+  <div class="center">
+    <div class="header-center-2">
+      <img src="./assetAOL/bell.png" alt="bell" />
+    </div>
+    
+    <div class="header-center">
+      <button class="filter-btn" onclick="toggleFilter()"><img src="./assetAOL/filter.png" alt="filter" /> Filter</button>
+      <input type="text" class="search-input" placeholder="Enter an address, city, or postal code"  onclick=clearFilter()" />
+      <button class="search-icon"><img src="./assetAOL/search.png" alt="search" /></button>
+    </div>
+  </div>
+  
+  <div class="header-right">
+    <button class="sign-in-btn">Sign In</button>
+  </div>
+
+  <!-- modal pop up buat filter -->
+
+  <div id="filter-modal" class="modal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close" onclick="toggleFilter()">×</span>
+      <div class="toggle-buy-rent">
+        <button id="btn-buy" class="active" onclick="selectMode('buy')"><b>Buy</b></button>
+        <button id="btn-rent" onclick="selectMode('rent')"><b>Rent</b></button>
+      </div>
+    
+      <div id="content-buy" class="mode-content">
+        <div class="field-group">
+          <label><b>Property Type</b></label>
+          <p>House</p>
+        </div>
+    
+        <div class="field-group-2">
+          <b>Filtered By</b><br />
+          <label><input type="radio" name="filter"> Most Popular</label><br />
+          <label><input type="radio" name="filter"> Newest Property</label><br />
+          <label><input type="radio" name="filter"> Lowest Price</label><br />
+          <label><input type="radio" name="filter"> Highest Price</label>
+        </div>
+    
+        <div class="field-group-3">
+          <b>Price Range</b><br>
+          <input type="text" placeholder="Rp. 0" />
+          <i>-</i>
+          <input type="text" placeholder="Rp. 0" />
+        </div>
+    
+        <div class="field-group-3">
+          <b>Square Feet</b><br>
+          <input type="text" placeholder="m²" />
+          <i>-</i>
+          <input type="text" placeholder="m²" />
+        </div>
+    
+        <div class="field-group-4">
+          <div class="field-group-4-1">
+            <b>Bedroom</b><br>
+            <div class="input-group">
+              <button onclick="decrement('bedroom')">-</button>
+              <input type="number" id="bedroom" value="0" readonly />
+              <button onclick="increment('bedroom')">+</button>
+            </div>
+          </div>
+          <div class="field-group-4-2">
+            <b>Bathroom</b><br>
+            <div class="input-group">
+              <button onclick="decrement('bathroom')">-</button>
+              <input type="number" id="bathroom" value="0" readonly />
+              <button onclick="increment('bathroom')">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <b>Facility :</b><br>
+          <input type="checkbox" id="garage-buy" /> <label for="garage-buy">Garage</label><br/>
+          <input type="checkbox" id="garden-buy" /> <label for="garden-buy">Garden</label><br>
+          <input type="checkbox" id="swimming-buy" /> <label for="swimming-buy">Swimming Pool</label>
+        </div>
+      </div>
+      <div id="content-rent" class="mode-content" style="display: none;">
+        <div class="field-group">
+          <b>Property Type</b><br>
+          <select class ="pilih" id="property-type-rent" onchange="updatePropertyOptions('rent')">
+            <option value="house">House</option>
+            <option value="apartment">Apartment</option>
+            <option value="boarding">Boarding House</option>
+          </select>
+        </div>
+    
+        <div id="house-options-rent" class="property-options">
+          <div class="field-group-2">
+            <b>Filtered By</b><br />
+            <label><input type="radio" name="filter"> Most Popular</label><br />
+            <label><input type="radio" name="filter"> Newest Property</label><br />
+            <label><input type="radio" name="filter"> Lowest Price</label><br />
+            <label><input type="radio" name="filter"> Highest Price</label>
+          </div>
+    
+          <div class="field-group-3">
+            <b>Price Range</b><br>
+            <input type="text" placeholder="Rp. 0" />
+            <i>-</i>
+            <input type="text" placeholder="Rp. 0" />
+          </div>
+    
+          <div class="field-group-3">
+            <b>Square Feet</b><br>
+            <input type="text" placeholder="m²" />
+            <i>-</i>
+            <input type="text" placeholder="m²" />
+          </div>
+          <div class="field-group-3">
+            <b>Rental Period</b>
+            <select class ="period">
+              <option>Weekly</option>
+              <option>Monthly</option>
+              <option>Annual</option>
+            </select>
+          </div>
+          <div class="field-group-4">
+            <div class="field-group-4-1">
+              <b>Bedroom</b><br>
+              <div class="input-group">
+                <button onclick="decrement('bedroom')">-</button>
+                <input type="number" id="bedroom" value="0" readonly />
+                <button onclick="increment('bedroom')">+</button>
+              </div>
+            </div>
+          <div class="field-group-4-2">
+            <b>Bathroom</b><br>
+              <div class="input-group">
+                <button onclick="decrement('bathroom')">-</button>
+                <input type="number" id="bathroom" value="0" readonly />
+                <button onclick="increment('bathroom')">+</button>
+              </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <b>Facility:</b><br>
+          <input type="checkbox" id="garage-rent" /> <label for="garage-rent">Garage</label><br/>
+          <input type="checkbox" id="garden-rent" /> <label for="garden-rent">Garden</label><br>
+          <input type="checkbox" id="swimming-rent" /> <label for="swimming-rent">Swimming Pool</label>
+        </div>
+      </div>
+      <div id="apartment-options-rent" class="property-options" style="display:none;">
+        <div class="field-group-2">
+          <b>Filtered By</b><br />
+          <label><input type="radio" name="filter"> Most Popular</label><br />
+          <label><input type="radio" name="filter"> Newest Property</label><br />
+          <label><input type="radio" name="filter"> Lowest Price</label><br />
+          <label><input type="radio" name="filter"> Highest Price</label>
+        </div>
+    
+        <div class="field-group-3">
+          <b>Price Range</b><br>
+          <input type="text" placeholder="Rp. 0" />
+          <i>-</i>
+          <input type="text" placeholder="Rp. 0" />
+        </div>
+    
+        <div class="field-group-3">
+          <b>Rental Period</b>
+          <select class ="period">
+            <option>Weekly</option>
+            <option>Monthly</option>
+            <option>Annual</option>
+          </select>
+        </div>
+    
+        <div class="field-group">
+          <b>Facility :</b><br>
+          <input type="checkbox" id="gym-rent" /> <label for="gym-rent">Gym</label><br>
+          <input type="checkbox" id="kitchen-rent" /> <label for="kitchen-rent">Kitchen</label><br>
+          <input type="checkbox" id="swimming-rent" /> <label for="swimming-rent">Swimming Pool</label><br>
+          <input type="checkbox" id="view-rent" /> <label for="view-rent">City View</label><br>
+        </div>
+      </div>
+    
+      <div id="boarding-options-rent" class="property-options" style="display:none;">
+        <div class="field-group-2">
+          <b>Filtered By</b><br />
+          <label><input type="radio" name="filter"> Most Popular</label><br />
+          <label><input type="radio" name="filter"> Newest Property</label><br />
+          <label><input type="radio" name="filter"> Lowest Price</label><br />
+          <label><input type="radio" name="filter"> Highest Price</label>
+        </div>
+    
+        <div class="field-group-3">
+          <b>Price Range</b><br>
+          <input type="text" placeholder="Rp. 0" />
+          <i>-</i>
+          <input type="text" placeholder="Rp. 0" />
+        </div>
+    
+        <div class="field-group-3">
+          <b>Rental Period</b>
+          <select class ="period">
+            <option>Weekly</option>
+            <option>Monthly</option>
+            <option>Annual</option>
+          </select>
+        </div>
+    
+        <div class="field-group-4">
+          <div class="field-group-4-1">
+            <b>Bedroom</b><br>
+            <div class="input-group">
+              <button onclick="decrement('bedroom')">-</button>
+              <input type="number" id="bedroom" value="0" readonly />
+              <button onclick="increment('bedroom')">+</button>
+            </div>
+          </div>
+          <div class="field-group-4-2">
+            <b>Bathroom</b><br>
+            <div class="input-group">
+              <button onclick="decrement('bathroom')">-</button>
+              <input type="number" id="bathroom" value="0" readonly />
+              <button onclick="increment('bathroom')">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <b>Facility :</b><br>
+          <input type="checkbox" id="room-rent" /> <label for="room-rent">Room Cleaning</label><br/>
+          <input type="checkbox" id="water-rent" /> <label for="water-rent">Water Heater</label><br>
+          <input type="checkbox" id="ac-rent" /> <label for="ac-rent">Air Conditioner</label><br>
+          <input type="checkbox" id="bathroom-rent" /> <label for="bathroom-rent">Bathroom</label>
+        </div>
+        <div class="field-group">
+          <b>Shared Facility :</b><br>
+          <input type="checkbox" id="park-rent" /> <label for="park-rent">Parking spot</label><br/>
+          <input type="checkbox" id="kitchen-rent" /> <label for="kitchen-rent">Kitchen</label><br/>
+          <input type="checkbox" id="bathroom-rent" /> <label for="bathroom-rent">Bathroom</label><br>
+          <input type="checkbox" id="livin-rent" /> <label for="livin-rent">Living room</label>
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button class="reset" onclick="clearAll()">Reset All</button>
+      <button class="search" onclick="applyFilters()">Apply Filters</button>
+    </div>
+  </div>
+</header>
+</head>
+<script src="header.js"></script>

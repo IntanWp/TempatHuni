@@ -1,0 +1,366 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap");
+:root{
+    --red : #A71F4B;
+    --pink:#fff6f8;
+    --white:#ffffff;
+    --gray :#333;
+}
+body {
+  font-family: "Merriweather", serif;
+  line-height: 1.6;
+  color: #333;
+}
+.container {
+  max-width: 90%;
+}
+.filter-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: sans-serif;
+  margin: 30px 0;
+  padding:0 40px;
+  max-width: 95%;
+}
+
+.filter-label {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #333;
+}
+
+.filter-tag {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.remove-tag {
+  margin-left: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.remove-tag:hover {
+  color: red;
+}
+
+
+.homepage-catalogue-grid {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 2%;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 10%;
+  margin-top: -2%;
+}
+
+
+.homepage-catalogue-status-and-wishlist {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0%; 
+  position: relative;
+  top: -10px; 
+}
+
+.homepage-catalogue-status {
+  padding: 0.3rem 0.7rem;
+  background-color: #3CBE66;
+  border-radius: 20px;
+  color: white;
+  margin-bottom: -15%;
+  z-index: 99;
+  margin-left: 4%;
+  margin-top: 13%;
+  width: auto;
+  font-size: 15px;
+  text-align: center;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.homepage-catalogue-wishlist-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  margin-right: 4%;
+  background-color: #f5f5f5;
+  border-radius: 50%;
+  margin-bottom: -60%;
+  z-index: 99;
+  margin-left: 2%;
+  margin-top: 14%;
+  width: 30px;
+  height: 30px;
+}
+
+.homepage-catalogue-wishlist-icon {
+  width: 70%;
+  height: 70%;
+}
+
+.homepage-catalogue-card-image {
+  position: relative;
+  width: 100%;
+  background-repeat: no-repeat;
+  height: auto;
+  margin-right: 19.2rem;
+  border-radius: 10px;
+}
+
+.homepage-catalogue-overview-section {
+  width: 100%;
+  display: flex;
+  color: #959595;
+  justify-content: center;
+  align-items: center;
+  padding-right: 1%;
+
+  h1 {
+    text-decoration: none;
+    font-weight: 0;
+  }
+
+  h2 {
+    font-size: 12px;
+  }
+}
+
+.homepage-catalogue-overview-legend {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 35%;
+  font-size: 10px;
+}
+
+.homepage-catalogue-overview-legend-icon {
+  width: 20%;
+  height: auto;
+}
+
+.homepage-catalogue-highlights {
+  p {
+    font-size: 12px;
+  }
+}
+
+.homepage-catalogue-highlight-legend {
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-left: 1%;
+    margin-top: 1%;
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
+
+.homepage-catalogue-highlight-title {
+  font-weight: 200;
+}
+
+.homepage-catalogue-highlight-legend-discount-price {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2%;
+}
+
+.homepage-catalogue-highlight-legend-discount-indicator {
+  background-color: #959595;
+  padding: 0.3rem;
+  border-radius: 6px;
+  color: #f5f5f5;
+}
+
+.homepage-catalogue-highlight-legend-originalprice {
+  font-weight: bold;
+}
+
+.homepage-catalogue-highlight-legend img {
+  width: 17px;
+  height: 17px; 
+}
+
+.map-section {
+    margin-top: 60px;
+}
+
+.transport-around {
+    margin-top: 40px;
+}
+
+.property-around {
+    margin-top: 40px;
+    width: 80%;
+    margin: 0 auto 80px;
+}
+
+.property-around h2 {
+    color: var(--red);
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+    padding:  0 40px;
+    align-items: start;
+}
+
+a{
+  text-decoration: none;
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.card-img-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 75%;
+    /* 4:3 aspect ratio */
+    overflow: hidden;
+}
+
+.card-img-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #28a745;
+    color: white;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.favorite {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    color: var(--red);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+    padding: 16px;
+    font-size: 14px;
+}
+
+/* Fasilitas */
+.facilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: #777;
+    font-size: 13px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.facilities span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.facilities img {
+    width: 14px;
+    height: 14px;
+}
+
+/* Info Lokasi */
+.info h3 {
+    margin: 6px 0 4px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+}
+
+.info p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.sub-loc {
+    font-size: 13px;
+    color: #888;
+}
+
+/* Harga */
+.price-section {
+    margin-top: 12px;
+}
+
+.old-price {
+    color: #999;
+    text-decoration: line-through;
+    font-size: 14px;
+    margin-left: 6px;
+}
+
+.discount-badge {
+    background: #444;
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-right: 6px;
+}
+
+.current-price {
+    display: block;
+    margin-top: 6px;
+    color: var(--red);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.current-price small {
+    font-size: 12px;
+    color: var(--red);
+}

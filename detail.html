@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detail page (boarding)</title>
+  <link rel="stylesheet" href="detail.css">
+  <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="footer.css">
+</head>
+
+<body>
+
+  <!-- ===== HEADER ===== -->
+<header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="homepage.html" class="logo">
+                    <img src="./assetAOL/logo.png" alt="Tempat Huni Logo" class="logo-icon">
+                </a>
+                <div class="search-container">
+                    <img src='./assetAOL/bell.png' alt="Notifications" class="notification-icon">
+                    <button class="filter-btn" id="filterBtn">
+                        <img src="./assetAOL/location-red.png" alt="Filter" class="filter-icon">
+                        Filter
+                    </button>
+
+                    <div class="modal-overlay" id="modalOverlay">
+                        <div class="filter-modal">
+                            <button class="close-btn" id="closeBtn">×</button>
+                            
+                            <!-- Buy/Rent Toggle -->
+                            <div class="toggle-container">
+                                <button class="toggle-btn active" data-type="buy">Buy</button>
+                                <button class="toggle-btn" data-type="rent">Rent</button>
+                            </div>
+
+                            <!-- Property Type -->
+                            <div class="section-header">Property Type</div>
+                            <div class="property-type-group">
+                                <select class="property-type-select" id="propertyType">
+                                    <option value="house" selected>House</option>
+                                    <option value="apartment">Apartment</option>
+                                    <option value="boardingHouse">Boarding House</option>
+                                </select>
+                            </div>
+
+                            <!-- Filtered By -->
+                            <div class="section-header">Filtered By</div>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="popular" name="filter" value="popular" checked>
+                                    <label for="popular">Most Popular</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="newest" name="filter" value="newest">
+                                    <label for="newest">Newest Property</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="lowest" name="filter" value="lowest">
+                                    <label for="lowest">Lowest Price</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="highest" name="filter" value="highest">
+                                    <label for="highest">Highest Price</label>
+                                </div>
+                            </div>
+
+                            <!-- Price Range -->
+                            <div class="section-header">Price Range</div>
+                            <div class="range-container">
+                                <input type="text" class="range-input" placeholder="Rp. 0" id="minPrice">
+                                <span class="range-separator">-</span>
+                                <input type="text" class="range-input" placeholder="Rp. 0" id="maxPrice">
+                            </div>
+
+                            <!-- Square Feet -->
+                            <div class="section-header">Square Feet</div>
+                            <div class="range-container">
+                                <input type="text" class="range-input" placeholder="m²" id="minSqft">
+                                <span class="range-separator">-</span>
+                                <input type="text" class="range-input" placeholder="m²" id="maxSqft">
+                            </div>
+                            
+                            <!-- Rental Period (Only for Rent) -->
+                            <div class="rental-period-section" id="rentalPeriodSection" style="display: none;">
+                                <div class="section-header">Rental Period</div>
+                                <div class="property-type-group">
+                                    <select class="property-type-select" id="rentalPeriod">
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly" selected>Monthly</option>
+                                        <option value="annual">Annual</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Bedroom & Bathroom -->
+                            <div class="counter-container">
+                                <div class="counter-group">
+                                    <label class="counter-label">Bedroom</label>
+                                    <div class="counter-wrapper">
+                                        <button class="counter-btn" id="bedroomMinus" data-target="bedroom">−</button>
+                                        <input type="text" class="counter-display" id="bedroom" value="0" readonly>
+                                        <button class="counter-btn" id="bedroomPlus" data-target="bedroom">+</button>
+                                    </div>
+                                </div>
+                                <div class="counter-group">
+                                    <label class="counter-label">Bathroom</label>
+                                    <div class="counter-wrapper">
+                                        <button class="counter-btn" id="bathroomMinus" data-target="bathroom">−</button>
+                                        <input type="text" class="counter-display" id="bathroom" value="0" readonly>
+                                        <button class="counter-btn" id="bathroomPlus" data-target="bathroom">+</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Facility -->
+                            <div class="facility-section buy-facility" id="buyFacilitySection" style="display: block; background: white; padding: 20px; padding-left: 0; padding-bottom: 0; padding-top: 10px;">
+                                <div class="section-header">Facility</div>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-option">
+                                        <input type="checkbox" id="garage" value="garage">
+                                        <label for="garage">Garage</label>
+                                    </div>
+                                    <div class="checkbox-option">
+                                        <input type="checkbox" id="pool" value="pool">
+                                        <label for="pool">Swimming Pool</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Rent Facility (Only for Rent) -->
+                            <div class="facility-section rent-facility" id="rentFacilitySection" style="display: none; background: white; padding: 20px; padding-left: 0; padding-bottom: 0; padding-top: 10px;">
+                                <div class="section-header">Facility</div>
+                                <div class="checkbox-group rent-facility-grid" 
+                                    style="display: flex !important; flex-direction: row !important; gap: 5px !important; width: 100% !important; box-sizing: border-box !important;">
+                                    
+                                    <div class="facility-column" 
+                                        style="flex: 1 1 50% !important; display: flex !important; flex-direction: column !important; gap: 6px !important; width: 50% !important; box-sizing: border-box !important;">
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="roomCleaning" value="roomCleaning">
+                                            <label for="roomCleaning">Room Cleaning</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="waterHeater" value="waterHeater">
+                                            <label for="waterHeater">Water Heater</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="airConditioner" value="airConditioner">
+                                            <label for="airConditioner">Air Conditioner</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="facility-column" 
+                                        style="flex: 1 1 50% !important; display: flex !important; flex-direction: column !important; gap: 6px !important; width: 50% !important; box-sizing: border-box !important;">
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="privateBathroom" value="privateBathroom">
+                                            <label for="privateBathroom">Bathroom</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="window" value="window">
+                                            <label for="window">Window</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Shared Facility (Only for Rent) -->
+                            <div class="shared-facility-section" id="sharedFacilitySection"  style="display: block; background: white; padding: 20px; padding-left: 0; padding-bottom: 0; display: none; padding-top: 10px">
+                                <div class="section-header">Shared Facility</div>
+                                <div class="checkbox-group shared-facility-grid" 
+                                    style="display: flex !important; flex-direction: row !important; gap: 5px !important; width: 100% !important; box-sizing: border-box !important;">
+                                    
+                                    <div class="facility-column" 
+                                        style="flex: 1 1 50% !important; display: flex !important; flex-direction: column !important; gap: 6px !important; width: 50% !important; box-sizing: border-box !important;">
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="kitchen" value="kitchen">
+                                            <label for="kitchen">Kitchen</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="wifi" value="wifi">
+                                            <label for="wifi">WiFi</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="tv" value="tv">
+                                            <label for="tv">TV</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="parkingSpot" value="parkingSpot">
+                                            <label for="parkingSpot">Parking Spot</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="facility-column" 
+                                        style="flex: 1 1 50% !important; display: flex !important; flex-direction: column !important; gap: 6px !important; width: 50% !important; box-sizing: border-box !important;">
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="refrigerator" value="refrigerator">
+                                            <label for="refrigerator">Refrigerator</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="swimmingPool" value="swimmingPool">
+                                            <label for="swimmingPool">Swimming Pool</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="sharedBathroom" value="sharedBathroom">
+                                            <label for="sharedBathroom">Bathroom</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="lounge" value="lounge">
+                                            <label for="lounge">Lounge</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="action-buttons">
+                                <button class="reset-btn" id="resetBtn">Reset All</button>
+                                <button class="search-btn" id="searchBtn">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" class="search-input" placeholder="Enter an address, city, or the postal code" id="searchInput">
+                    <button class="search-btn" id="searchBtn">
+                        <img src="./assetAOL/search.png" alt="Search" class="search-icon">
+                    </button>
+                </div>
+                
+                <button class="sign-in-btn" id="signInBtn">Sign In</button>
+            </div>
+        </div>
+    </header>
+
+  <div id="content">
+    <section class="detil-boarding">
+      <div class="desc">
+        <div class="desc-1">
+          <label for="property-name">Kostan Indah Permata</label><br>
+          <p><img src="./assetAOL/location.png" alt="location">Cendana, Bekasi |
+            <img src="./assetAOL/star.png" alt="star">(179 Review)
+          </p>
+        </div>
+        <div class="desc-2">
+          <img src="./assetAOL/love.png" alt="love">
+          <img src="./assetAOL/share.png" alt="share">
+          <button class="chat-button" onclick="showLoginAlert()"><b>Chat Now</b></button>
+        </div>
+      </div>
+
+      <section class="photo-gallery">
+        <div class="main-photo">
+          <img src="./assetAOL/airbnb3.jpg" alt="Main Room Photo" class="preview-img">
+        </div>
+        <div class="side-photos">
+          <img src="./assetAOL/fasilitas2.jpg" alt="Room Photo 2" class="preview-img">
+          <img src="./assetAOL/fasilitas4.jpg" alt="Living Room" class="preview-img">
+          <img src="./assetAOL/fasilitas6.jpg" alt="Kitchen" class="preview-img">
+          <div class="photo-overlay">
+            <img src="./assetAOL/fasilitas5.jpg" alt="More Photos" class="preview-img">
+            <div class="overlay-text">See All</div>
+          </div>
+        </div>
+      </section>
+      <section class="overview">
+        <h2>Overview</h2>
+        <p>This boarding house consists of 3 floors. Type A rooms are on each floor with windows facing the corridor.
+          The available survey visit times are from 07.00–19.00 WIB.</p>
+        <p>Facility information:</p>
+        <ul>
+          <li>Electricity: 3500 VA (Postpaid)</li>
+          <li>Water source: Well</li>
+          <li>WiFi: Indihome - 50 Mbps</li>
+          <li>Parking capacity: 15 motorbikes, 1 car, and 10 bicycles</li>
+        </ul>
+        <p>Additional costs:</p>
+        <ul>
+          <li>Guests staying more than 2 days +25 thousand / day</li>
+        </ul>
+        <p>This boarding house is located close to the highway with access that can be passed by car,
+          located 2 minutes from Binus University.</p>
+
+        <h2>Facilities</h2>
+        <div class="facilities">
+          <div class="facilities-1">
+            <h3><img src="./assetAOL/general.png" alt="">Facility information:</h3>
+            <ul>
+              <li>Free Parking</li>
+              <li>Shared Living Room</li>
+              <li>Shared Kitchen</li>
+            </ul>
+          </div>
+          <div class="facilities-2">
+            <h3><img src="./assetAOL/roomfacility.png" alt="">Room Facilities:</h3>
+            <ul>
+              <li>Wi-Fi</li>
+              <li>Bed</li>
+              <li>Bathroom</li>
+              <li>Wardrobe</li>
+              <li>Desk</li>
+              <li>Air Conditioner</li>
+              <li>Adapter</li>
+              <li>TV</li>
+            </ul>
+          </div>
+          <div class="facilities-3">
+            <h3><img src="./assetAOL/bathroom.png" alt="">Bathroom</h3>
+            <ul>
+              <li>Hair Dryer</li>
+              <li>Shower</li>
+              <li>Toilet</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="get-direction-section">
+        <h2 class="section-title">Get Direction</h2>
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1983.8882421888375!2d106.78072331608805!3d-6.201943662569967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f6d3d43bff4d%3A0xb29f46500a905228!2sJakarta%20Barat!5e0!3m2!1sen!2sid!4v1622114012345!5m2!1sen!2sid"
+            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          <button class="get-direction-button"><a href="https://www.google.com/maps">Get Direction</a></button>
+        </div>
+      </section>
+      <section class="neighborhood-insights">
+        <h2 class="section-title">Neighborhood Insights</h2>
+          <ul>
+            <li><strong>Flood Risk</strong> <span class="badge badge-medium">Medium</span><br>
+              Slight flood risk during heavy rains, but the building sits on higher ground.</li>
+            <li><strong>Safety</strong> <span class="badge badge-high">High</span><br>
+              Located in a secure area with gated entry and CCTV at the main entrance.</li>
+            <li><strong>Noise Levels</strong> <span class="badge badge-low">Low</span><br>
+              Quiet surroundings, occasional noise from the street during rush hours.</li>
+            <li><strong>Transportation</strong> <span class="badge badge-high">High</span><br>
+              Reachable by public transport and ride-hailing, but far from main train lines.</li>
+            <li><strong>Nearby Amenities</strong> <span class="badge badge-high">High</span><br>
+              Close to shops, laundry, food stalls, and ATM within walking distance.</li>
+        </ul>
+      </section>
+
+      <section class="around-property">
+        <h2 class="section-title">Around the Property</h2>
+          <div class="property-container">
+            <div class="property">
+              <p>Azhar-al Hospital</p>
+              <p>800 m</p>
+            </div>
+          <div class="property">
+            <p>PeppeL Restaurant</p>
+            <p>500 m</p>
+          </div>
+          <div class="property">
+            <p>Binus University</p>
+            <p>1200 m</p>
+          </div>
+          <div class="see">
+            <b>See More</b>
+          </div>
+        </div>
+      </section>
+      <section class="booking-section">
+        <h2>Booking</h2>
+        <div class="booking-form">
+          <div class="form-group">
+            <label>Start By</label>
+            <input type="date" />
+          </div>
+          <div class="form-group">
+            <label for="transaction-type">Transaction Type</label>
+            <select id="transaction-type">
+              <option>Monthly</option>
+              <option>Weekly</option>
+              <option>Annual</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="subtotal">Subtotal</label>
+            <p class="subtotal-amount">Rp. 3.152.000,00</p>
+          </div>
+          <button class="confirm-payment-btn" onclick="return validateBookingForm()"><a href="signIn.html">Confirm Payment</a></button>
+        </div>
+
+        <div class="set-appointment">
+          <h3>Set An Appointment</h3>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Enter Your Name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter Your Email">
+          </div>
+          <div class="form-group">
+            <label for="phone-number">Phone Number</label>
+            <input type="text" id="phone-number" placeholder="Enter Your Phone Number">
+          </div>
+          <div class="form-group">
+            <label>Appointment Date</label>
+            <input type="date" />
+          </div>
+          <div class="form-group">
+            <label for="purpose-description">Purpose Description</label>
+            <textarea id="purpose-description" placeholder="Enter Your Purpose For Appointment"></textarea>
+          </div>
+          <button class="send-request-btn" onclick="return validateAppointmentForm()">Send A Request</button>
+        </div>
+      </section>
+      <section class="customer-review-section">
+        <h2>Customer Review</h2>
+        <div class="review-filters">
+          <div class="filter-dropdown">
+            <span>Filtering:</span>
+            <select>
+              <option>Category</option>
+            </select>
+          </div>
+          <div class="filter-dropdown">
+            <select>
+              <option>Rating</option>
+            </select>
+          </div>
+          <div class="search-review">
+            <input type="text" placeholder="Search Here">
+            <img src="./assetAOL/search.png" alt="search icon">
+          </div>
+          <button class="write-review-btn">Write A Review</button>
+        </div>
+
+        <div class="review-card">
+          <div class="reviewer-info">
+            <img src="./assetAOL/profile.jpg" alt="Firly Ivani">
+            <div>
+              <h4>Firly Ivani <span class="badge badge-hotel">Hotel</span></h4>
+              <div class="stars">
+                <img src="./assetAOL/star.png" alt="star">
+              </div>
+            </div>
+          </div>
+          <p>Very quiet environment. Great for studying or resting</p>
+          <span class="review-date">2 March 2023</span>
+        </div>
+
+        <button class="view-more-comments-btn">View More Comments</button>
+      </section>
+
+      <!-- Modal Gambar -->
+      <div id="imgModal" class="modal-detil" style="display: none;">
+        <span class="close" style="cursor: pointer;">&times;</span>
+        <img class="modal-detil-content" id="modalImage" />
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="main-footer">
+    <div class="footer-column">
+      <a href="homepage.html"><img src="./assetAOL/logo.png" alt="logo" class="footer-logo" /></a>
+      <div class="social-icons">
+        <a href="#"><img src="./assetAOL/facebook.png" alt="Facebook" /></a>
+        <a href="#"><img src="./assetAOL/instagram.png" alt="Instagram" /></a>
+        <a href="#"><img src="./assetAOL/linkedin.png" alt="LinkedIn" /></a>
+        <a href="#"><img src="./assetAOL/twitter.png" alt="Twitter" /></a>
+      </div>
+      <button class="contact-us-btn"><b>Contact Us</b></button>
+    </div>
+    <div class="footer-column">
+      <h4>Find Your Properties</h4>
+      <ul>
+        <li><a href="#">Property for Rent</a></li>
+        <li><a href="#">Property for Booking</a></li>
+        <li><a href="#">Book a hotel</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h4>Tempat Huni</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Product & Services</a></li>
+        <li><a href="#">Partner</a></li>
+        <li><a href="#">Career</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h4>Customer Service</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="copyright">
+      <p>Copyright © 2023. All rights reserved</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script src="header.js"></script>
+  <script src="detail.js"></script>
+</body>
+
+</html>

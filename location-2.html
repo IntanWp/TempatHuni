@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Location – Bandung</title>
+  <link rel="stylesheet" href="location.css">
+  <!-- <link rel="stylesheet" href="header.css"> -->
+  <link rel="stylesheet" href="footer.css">
+</head>
+
+<body>
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="homepage.html" class="logo">
+          <img src="./assetAOL/logo.png" alt="Tempat Huni Logo" class="logo-icon">
+        </a>
+        <div class="search-container">
+          <img src='./assetAOL/bell.png' alt="Notifications" class="notification-icon">
+          <button class="filter-btn" id="filterBtn">
+            <img src="./assetAOL/filter.png" alt="Filter" class="filter-icon">
+            Filter
+          </button>
+
+          <div class="modal-overlay" id="modalOverlay">
+                        <div class="filter-modal">
+                            <button class="close-btn" id="closeBtn">×</button>
+                            
+                            <!-- Buy/Rent Toggle -->
+                            <div class="toggle-container">
+                                <button class="toggle-btn active" data-type="buy">Buy</button>
+                                <button class="toggle-btn" data-type="rent">Rent</button>
+                            </div>
+
+                            <!-- Property Type -->
+                            <div class="section-header">Property Type</div>
+                            <div class="property-type-group">
+                                <select class="property-type-select" id="propertyType">
+                                    <option value="house" selected>House</option>
+                                    <option value="apartment">Apartment</option>
+                                    <option value="boardingHouse">Boarding House</option>
+                                </select>
+                            </div>
+
+                            <!-- Filtered By -->
+                            <div class="section-header">Filtered By</div>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="popular" name="filter" value="popular" checked>
+                                    <label for="popular">Most Popular</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="newest" name="filter" value="newest">
+                                    <label for="newest">Newest Property</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="lowest" name="filter" value="lowest">
+                                    <label for="lowest">Lowest Price</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="highest" name="filter" value="highest">
+                                    <label for="highest">Highest Price</label>
+                                </div>
+                            </div>
+
+                            <!-- Price Range -->
+                            <div class="section-header">Price Range</div>
+                            <div class="range-container">
+                                <input type="text" class="range-input" placeholder="Rp. 0" id="minPrice">
+                                <span class="range-separator">-</span>
+                                <input type="text" class="range-input" placeholder="Rp. 0" id="maxPrice">
+                            </div>
+
+                            <!-- Square Feet -->
+                            <div class="section-header">Square Feet</div>
+                            <div class="range-container">
+                                <input type="text" class="range-input" placeholder="m²" id="minSqft">
+                                <span class="range-separator">-</span>
+                                <input type="text" class="range-input" placeholder="m²" id="maxSqft">
+                            </div>
+                            
+                            <!-- Rental Period (Only for Rent) -->
+                            <div class="rental-period-section" id="rentalPeriodSection" style="display: none;">
+                                <div class="section-header">Rental Period</div>
+                                <div class="property-type-group">
+                                    <select class="property-type-select" id="rentalPeriod">
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly" selected>Monthly</option>
+                                        <option value="annual">Annual</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Bedroom & Bathroom -->
+                            <div class="counter-container">
+                                <div class="counter-group">
+                                    <label class="counter-label">Bedroom</label>
+                                    <div class="counter-wrapper">
+                                        <button class="counter-btn" id="bedroomMinus" data-target="bedroom">−</button>
+                                        <input type="text" class="counter-display" id="bedroom" value="0" readonly>
+                                        <button class="counter-btn" id="bedroomPlus" data-target="bedroom">+</button>
+                                    </div>
+                                </div>
+                                <div class="counter-group">
+                                    <label class="counter-label">Bathroom</label>
+                                    <div class="counter-wrapper">
+                                        <button class="counter-btn" id="bathroomMinus" data-target="bathroom">−</button>
+                                        <input type="text" class="counter-display" id="bathroom" value="0" readonly>
+                                        <button class="counter-btn" id="bathroomPlus" data-target="bathroom">+</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Facility -->
+                            <div class="facility-section buy-facility" id="buyFacilitySection" style="display: block; background: white; padding: 20px; padding-left: 0; padding-bottom: 0; padding-top: 10px;">
+                                <div class="section-header">Facility</div>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-option">
+                                        <input type="checkbox" id="garage" value="garage">
+                                        <label for="garage">Garage</label>
+                                    </div>
+                                    <div class="checkbox-option">
+                                        <input type="checkbox" id="pool" value="pool">
+                                        <label for="pool">Swimming Pool</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Rent Facility (Only for Rent) -->
+                            <div class="facility-section rent-facility" id="rentFacilitySection" style="display: none; background: white; padding: 20px; padding-left: 0; padding-bottom: 0; padding-top: 10px;">
+                                <div class="section-header">Facility</div>
+                                <div class="checkbox-group rent-facility-grid" 
+                                    style="display: flex !important; flex-direction: row !important; gap: 5px !important; width: 100% !important; box-sizing: border-box !important;">
+                                    
+                                    <div class="facility-column" 
+                                        style="flex: 1 1 50% !important; display: flex !important; flex-direction: column !important; gap: 6px !important; width: 50% !important; box-sizing: border-box !important;">
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="roomCleaning" value="roomCleaning">
+                                            <label for="roomCleaning">Room Cleaning</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="waterHeater" value="waterHeater">
+                                            <label for="waterHeater">Water Heater</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="airConditioner" value="airConditioner">
+                                            <label for="airConditioner">Air Conditioner</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="facility-column" 
+                                        style="flex: 1 1 50% !important; display: flex !important; flex-direction: column !important; gap: 6px !important; width: 50% !important; box-sizing: border-box !important;">
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="privateBathroom" value="privateBathroom">
+                                            <label for="privateBathroom">Bathroom</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="window" value="window">
+                                            <label for="window">Window</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Shared Facility (Only for Rent) -->
+                            <div class="shared-facility-section" id="sharedFacilitySection"  style="display: block; background: white; padding: 20px; padding-left: 0; padding-bottom: 0; display: none; padding-top: 10px">
+                                <div class="section-header">Shared Facility</div>
+                                <div class="checkbox-group shared-facility-grid" 
+                                    style="display: flex !important; flex-direction: row !important; gap: 5px !important; width: 100% !important; box-sizing: border-box !important;">
+                                    
+                                    <div class="facility-column" 
+                                        style="flex: 1 1 50% !important; display: flex !important; flex-direction: column !important; gap: 6px !important; width: 50% !important; box-sizing: border-box !important;">
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="kitchen" value="kitchen">
+                                            <label for="kitchen">Kitchen</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="wifi" value="wifi">
+                                            <label for="wifi">WiFi</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="tv" value="tv">
+                                            <label for="tv">TV</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="parkingSpot" value="parkingSpot">
+                                            <label for="parkingSpot">Parking Spot</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="facility-column" 
+                                        style="flex: 1 1 50% !important; display: flex !important; flex-direction: column !important; gap: 6px !important; width: 50% !important; box-sizing: border-box !important;">
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="refrigerator" value="refrigerator">
+                                            <label for="refrigerator">Refrigerator</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="swimmingPool" value="swimmingPool">
+                                            <label for="swimmingPool">Swimming Pool</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="sharedBathroom" value="sharedBathroom">
+                                            <label for="sharedBathroom">Bathroom</label>
+                                        </div>
+                                        <div class="checkbox-option" style="display: flex; align-items: center; gap: 8px; padding: 4px;">
+                                            <input type="checkbox" id="lounge" value="lounge">
+                                            <label for="lounge">Lounge</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="action-buttons">
+                                <button class="reset-btn" id="resetBtn">Reset All</button>
+                                <button class="search-btn" id="searchBtn">Search</button>
+                            </div>
+                        </div>
+                    </div>
+          <input type="text" class="search-input" placeholder="Enter an address, city, or the postal code" id="searchInput">
+          <button class="search-btn" id="searchBtn">
+            <img src="./assetAOL/search.png" alt="Search" class="search-icon">
+          </button>
+        </div>
+        <a href="profile.html">
+          <img src="./assetAOL/profile.jpg" alt="Profile" class="profile-picture">
+        </a>
+
+      </div>
+    </div>
+  </header>
+
+  <div id="content">
+
+    <!-- Hero / Title Card -->
+    <section class="location-hero">
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <h1>Bandung</h1>
+          <p>
+            Bandung is the capital city of West Java province in Indonesia and is known as "Kota Kembang" (City of
+            Flowers)
+            or "Parijs van Java" (Paris of Java) due to its lush greenery and European-style colonial architecture. It's
+            a
+            vibrant city with a rich history, known for its fashion, culinary scene, and creative industry.
+          </p>
+          <div class="hero-tags">
+            <span class="tag public"><img src="./assetAOL/icon-bus.png" alt=""> Public Transportations</span>
+            <span class="tag nature"><img src="./assetAOL/icon-nature.png" alt=""> Nature & Adventure</span>
+            <span class="tag private"><img src="./assetAOL/icon-car.png" alt=""> Private Transportations</span>
+            <span class="tag friends"><img src="./assetAOL/icon-friends.png" alt=""> Friend Group Tours</span>
+            <span class="tag local"><img src="./assetAOL/icon-map.png" alt=""> Local Visit</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map -->
+    <section class="map-section">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d197812.00289335277!2d107.2774398062234!3d-6.895747194839316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e68f6f2bad77%3A0x1571f1b5e50cce69!2sBandung%2C%20West%20Java%2C%20Indonesia!5e0"
+        frameborder="0" allowfullscreen="" loading="lazy">
+      </iframe>
+    </section>
+
+    <!-- Transport Around Bandung -->
+    <section class="transport-around">
+      <h2>Transport Around Bandung</h2>
+      <div class="columns">
+        <div class="column">
+          <h3><img src="./assetAOL/general.png" alt="">Metro Jabar</h3>
+          <ul>
+            <li>Leuwipanjang – Soreang</li>
+            <li>Alun-Alun Bandung – Kota Baru parahyangan</li>
+            <li>Balendah – BEC</li>
+            <li>Leuwipanjang – Majalaya</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3><img src="./assetAOL/train.png" alt="">Kereta Api Komuter</h3>
+          <ul>
+            <li>Padalarang – Cicalengka</li>
+            <li>Garut – Padalarang</li>
+            <li>Feeder KCJB</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Property Around The Location -->
+    <section class="homepage-catalogue">
+      <h2>Property Around The Location</h2>
+            <div class="homepage-catalogue-grid">
+                <div class="homepage-catalogue-card">
+                    <div class="homepage-catalogue-status-and-wishlist">
+                        <p class="homepage-catalogue-status">Boarding House</p>
+                        <div class="homepage-catalogue-wishlist-container">
+                            <img class="homepage-catalogue-wishlist-icon" src="./assetAOL/heart.png">
+                        </div>
+                    </div>
+                    <img src="./assetAOL/airbnb3.jpg" alt="" class="homepage-catalogue-card-image" >
+                    <div class="homepage-catalogue-overview-section">
+                        <div class="homepage-catalogue-overview-legend">
+                            <img src="./assetAOL/area.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                            <p>20 m<sup>2</sup></p>
+                        </div>
+                        <h1>|</h1>
+                        <div class="homepage-catalogue-overview-legend">
+                            <img src="./assetAOL/wifi.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                            <p>Wi-Fi</p>
+                        </div>
+                        <h1>|</h1>
+                        <div class="homepage-catalogue-overview-legend">
+                            <img src="./assetAOL/co-living.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                            <p>Co-Living</p>
+                        </div>
+                        <h1>|</h1>
+                        <div class="homepage-catalogue-overview-legend">
+                            <img src="./assetAOL/clock-access.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                            <p>24 H Access</p>
+                        </div>
+                    </div>
+                    <div class="homepage-catalogue-highlights">
+                        <div class="homepage-catalogue-highlight-legend">
+                            <img src="./assetAOL/co-living.png" alt="">
+                            <span>Coliving • Rent</span>
+                        </div>
+                        <h3 class="homepage-catalogue-highlight-title">Kostan Indah Permata</h3>
+                        <p>Amsterdam, Bekasi</p>
+                        <div class="homepage-catalogue-highlight-legend-discount-price">
+                            <p class="homepage-catalogue-highlight-legend-discount-indicator">-12%</p>
+                            <strike class="homepage-catalogue-highlight-legend-originalprice">Rp 1.000.000</strike>
+                        </div>
+                        <h2>Rp.880.000 (First Month)</h2>
+                </div>
+                
+            </div> 
+            <div class="homepage-catalogue-card">
+                <div class="homepage-catalogue-status-and-wishlist">
+                    <p class="homepage-catalogue-status">Boarding House</p>
+                    <div class="homepage-catalogue-wishlist-container">
+                        <img class="homepage-catalogue-wishlist-icon" src="./assetAOL/heart.png">
+                    </div>
+                </div>
+                <img src="./assetAOL/airbnb3.jpg" alt="" class="homepage-catalogue-card-image" >
+                <div class="homepage-catalogue-overview-section">
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/area.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>20 m<sup>2</sup></p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/wifi.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Wi-Fi</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/co-living.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Co-Living</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/clock-access.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>24 H Access</p>
+                    </div>
+                </div>
+                <div class="homepage-catalogue-highlights">
+                    <div class="homepage-catalogue-highlight-legend">
+                        <img src="./assetAOL/co-living.png" alt="">
+                        <span>Coliving • Rent</span>
+                    </div>
+                    <h3 class="homepage-catalogue-highlight-title">Kostan Indah Permata</h3>
+                    <p>Amsterdam, Bekasi</p>
+                    <div class="homepage-catalogue-highlight-legend-discount-price">
+                        <p class="homepage-catalogue-highlight-legend-discount-indicator">-12%</p>
+                        <strike class="homepage-catalogue-highlight-legend-originalprice">Rp 1.000.000</strike>
+                    </div>
+                    <h2>Rp.880.000 (First Month)</h2>
+            </div>
+            
+        </div> 
+        <div class="homepage-catalogue-card">
+                <div class="homepage-catalogue-status-and-wishlist">
+                    <p class="homepage-catalogue-status">Boarding House</p>
+                    <div class="homepage-catalogue-wishlist-container">
+                        <img class="homepage-catalogue-wishlist-icon" src="./assetAOL/heart.png">
+                    </div>
+                </div>
+                <img src="./assetAOL/airbnb3.jpg" alt="" class="homepage-catalogue-card-image" >
+                <div class="homepage-catalogue-overview-section">
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/area.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>20 m<sup>2</sup></p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/wifi.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Wi-Fi</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/co-living.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Co-Living</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/clock-access.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>24 H Access</p>
+                    </div>
+                </div>
+                <div class="homepage-catalogue-highlights">
+                    <div class="homepage-catalogue-highlight-legend">
+                        <img src="./assetAOL/co-living.png" alt="">
+                        <span>Coliving • Rent</span>
+                    </div>
+                    <h3 class="homepage-catalogue-highlight-title">Kostan Indah Permata</h3>
+                    <p>Amsterdam, Bekasi</p>
+                    <div class="homepage-catalogue-highlight-legend-discount-price">
+                        <p class="homepage-catalogue-highlight-legend-discount-indicator">-12%</p>
+                        <strike class="homepage-catalogue-highlight-legend-originalprice">Rp 1.000.000</strike>
+                    </div>
+                    <h2>Rp.880.000 (First Month)</h2>
+            </div>
+        
+    </div> 
+    <div class="homepage-catalogue-card">
+                <div class="homepage-catalogue-status-and-wishlist">
+                    <p class="homepage-catalogue-status">Boarding House</p>
+                    <div class="homepage-catalogue-wishlist-container">
+                        <img class="homepage-catalogue-wishlist-icon" src="./assetAOL/heart.png">
+                    </div>
+                </div>
+                <img src="./assetAOL/airbnb3.jpg" alt="" class="homepage-catalogue-card-image" >
+                <div class="homepage-catalogue-overview-section">
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/area.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>20 m<sup>2</sup></p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/wifi.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Wi-Fi</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/co-living.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Co-Living</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/clock-access.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>24 H Access</p>
+                    </div>
+                </div>
+                <div class="homepage-catalogue-highlights">
+                    <div class="homepage-catalogue-highlight-legend">
+                        <img src="./assetAOL/co-living.png" alt="">
+                        <span>Coliving • Rent</span>
+                    </div>
+                    <h3 class="homepage-catalogue-highlight-title">Kostan Indah Permata</h3>
+                    <p>Amsterdam, Bekasi</p>
+                    <div class="homepage-catalogue-highlight-legend-discount-price">
+                        <p class="homepage-catalogue-highlight-legend-discount-indicator">-12%</p>
+                        <strike class="homepage-catalogue-highlight-legend-originalprice">Rp 1.000.000</strike>
+                    </div>
+                    <h2>Rp.880.000 (First Month)</h2>
+            </div>
+
+    </div> 
+    <div class="homepage-catalogue-card">
+                <div class="homepage-catalogue-status-and-wishlist">
+                    <p class="homepage-catalogue-status">Boarding House</p>
+                    <div class="homepage-catalogue-wishlist-container">
+                        <img class="homepage-catalogue-wishlist-icon" src="./assetAOL/heart.png">
+                    </div>
+                </div>
+                <img src="./assetAOL/airbnb3.jpg" alt="" class="homepage-catalogue-card-image" >
+                <div class="homepage-catalogue-overview-section">
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/area.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>20 m<sup>2</sup></p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/wifi.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Wi-Fi</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/co-living.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Co-Living</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/clock-access.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>24 H Access</p>
+                    </div>
+                </div>
+                <div class="homepage-catalogue-highlights">
+                    <div class="homepage-catalogue-highlight-legend">
+                        <img src="./assetAOL/co-living.png" alt="">
+                        <span>Coliving • Rent</span>
+                    </div>
+                    <h3 class="homepage-catalogue-highlight-title">Kostan Indah Permata</h3>
+                    <p>Amsterdam, Bekasi</p>
+                    <div class="homepage-catalogue-highlight-legend-discount-price">
+                        <p class="homepage-catalogue-highlight-legend-discount-indicator">-12%</p>
+                        <strike class="homepage-catalogue-highlight-legend-originalprice">Rp 1.000.000</strike>
+                    </div>
+                    <h2>Rp.880.000 (First Month)</h2>
+            </div>
+
+    </div> 
+    <div class="homepage-catalogue-card">
+                <div class="homepage-catalogue-status-and-wishlist">
+                    <p class="homepage-catalogue-status">Boarding House</p>
+                    <div class="homepage-catalogue-wishlist-container">
+                        <img class="homepage-catalogue-wishlist-icon" src="./assetAOL/heart.png">
+                    </div>
+                </div>
+                <img src="./assetAOL/airbnb3.jpg" alt="" class="homepage-catalogue-card-image" >
+                <div class="homepage-catalogue-overview-section">
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/area.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>20 m<sup>2</sup></p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/wifi.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Wi-Fi</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/co-living.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Co-Living</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/clock-access.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>24 H Access</p>
+                    </div>
+                </div>
+                <div class="homepage-catalogue-highlights">
+                    <div class="homepage-catalogue-highlight-legend">
+                        <img src="./assetAOL/co-living.png" alt="">
+                        <span>Coliving • Rent</span>
+                    </div>
+                    <h3 class="homepage-catalogue-highlight-title">Kostan Indah Permata</h3>
+                    <p>Amsterdam, Bekasi</p>
+                    <div class="homepage-catalogue-highlight-legend-discount-price">
+                        <p class="homepage-catalogue-highlight-legend-discount-indicator">-12%</p>
+                        <strike class="homepage-catalogue-highlight-legend-originalprice">Rp 1.000.000</strike>
+                    </div>
+                    <h2>Rp.880.000 (First Month)</h2>
+            </div>
+
+    </div> 
+    <div class="homepage-catalogue-card">
+                <div class="homepage-catalogue-status-and-wishlist">
+                    <p class="homepage-catalogue-status">Boarding House</p>
+                    <div class="homepage-catalogue-wishlist-container">
+                        <img class="homepage-catalogue-wishlist-icon" src="./assetAOL/heart.png">
+                    </div>
+                </div>
+                <img src="./assetAOL/airbnb3.jpg" alt="" class="homepage-catalogue-card-image" >
+                <div class="homepage-catalogue-overview-section">
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/area.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>20 m<sup>2</sup></p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/wifi.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Wi-Fi</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/co-living.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Co-Living</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/clock-access.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>24 H Access</p>
+                    </div>
+                </div>
+                <div class="homepage-catalogue-highlights">
+                    <div class="homepage-catalogue-highlight-legend">
+                        <img src="./assetAOL/co-living.png" alt="">
+                        <span>Coliving • Rent</span>
+                    </div>
+                    <h3 class="homepage-catalogue-highlight-title">Kostan Indah Permata</h3>
+                    <p>Amsterdam, Bekasi</p>
+                    <div class="homepage-catalogue-highlight-legend-discount-price">
+                        <p class="homepage-catalogue-highlight-legend-discount-indicator">-12%</p>
+                        <strike class="homepage-catalogue-highlight-legend-originalprice">Rp 1.000.000</strike>
+                    </div>
+                    <h2>Rp.880.000 (First Month)</h2>
+            </div>
+
+    </div> 
+    <div class="homepage-catalogue-card">
+                <div class="homepage-catalogue-status-and-wishlist">
+                    <p class="homepage-catalogue-status">Boarding House</p>
+                    <div class="homepage-catalogue-wishlist-container">
+                        <img class="homepage-catalogue-wishlist-icon" src="./assetAOL/heart.png">
+                    </div>
+                </div>
+                <img src="./assetAOL/airbnb3.jpg" alt="" class="homepage-catalogue-card-image" >
+                <div class="homepage-catalogue-overview-section">
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/area.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>20 m<sup>2</sup></p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/wifi.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Wi-Fi</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/co-living.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Co-Living</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/clock-access.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>24 H Access</p>
+                    </div>
+                </div>
+                <div class="homepage-catalogue-highlights">
+                    <div class="homepage-catalogue-highlight-legend">
+                        <img src="./assetAOL/co-living.png" alt="">
+                        <span>Coliving • Rent</span>
+                    </div>
+                    <h3 class="homepage-catalogue-highlight-title">Kostan Indah Permata</h3>
+                    <p>Amsterdam, Bekasi</p>
+                    <div class="homepage-catalogue-highlight-legend-discount-price">
+                        <p class="homepage-catalogue-highlight-legend-discount-indicator">-12%</p>
+                        <strike class="homepage-catalogue-highlight-legend-originalprice">Rp 1.000.000</strike>
+                    </div>
+                    <h2>Rp.880.000 (First Month)</h2>
+            </div>
+
+    </div> 
+    <div class="homepage-catalogue-card">
+                <div class="homepage-catalogue-status-and-wishlist">
+                    <p class="homepage-catalogue-status">Boarding House</p>
+                    <div class="homepage-catalogue-wishlist-container">
+                        <img class="homepage-catalogue-wishlist-icon" src="./assetAOL/heart.png">
+                    </div>
+                </div>
+                <img src="./assetAOL/airbnb3.jpg" alt="" class="homepage-catalogue-card-image" >
+                <div class="homepage-catalogue-overview-section">
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/area.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>20 m<sup>2</sup></p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/wifi.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Wi-Fi</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/co-living.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Co-Living</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/clock-access.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>24 H Access</p>
+                    </div>
+                </div>
+                <div class="homepage-catalogue-highlights">
+                    <div class="homepage-catalogue-highlight-legend">
+                        <img src="./assetAOL/co-living.png" alt="">
+                        <span>Coliving • Rent</span>
+                    </div>
+                    <h3 class="homepage-catalogue-highlight-title">Kostan Indah Permata</h3>
+                    <p>Amsterdam, Bekasi</p>
+                    <div class="homepage-catalogue-highlight-legend-discount-price">
+                        <p class="homepage-catalogue-highlight-legend-discount-indicator">-12%</p>
+                        <strike class="homepage-catalogue-highlight-legend-originalprice">Rp 1.000.000</strike>
+                    </div>
+                    <h2>Rp.880.000 (First Month)</h2>
+            </div>
+
+    </div> 
+    <div class="homepage-catalogue-card">
+                <div class="homepage-catalogue-status-and-wishlist">
+                    <p class="homepage-catalogue-status">Boarding House</p>
+                    <div class="homepage-catalogue-wishlist-container">
+                        <img class="homepage-catalogue-wishlist-icon" src="./assetAOL/heart.png">
+                    </div>
+                </div>
+                <img src="./assetAOL/airbnb3.jpg" alt="" class="homepage-catalogue-card-image" >
+                <div class="homepage-catalogue-overview-section">
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/area.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>20 m<sup>2</sup></p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/wifi.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Wi-Fi</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/co-living.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Co-Living</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/clock-access.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>24 H Access</p>
+                    </div>
+                </div>
+                <div class="homepage-catalogue-highlights">
+                    <div class="homepage-catalogue-highlight-legend">
+                        <img src="./assetAOL/co-living.png" alt="">
+                        <span>Coliving • Rent</span>
+                    </div>
+                    <h3 class="homepage-catalogue-highlight-title">Kostan Indah Permata</h3>
+                    <p>Amsterdam, Bekasi</p>
+                    <div class="homepage-catalogue-highlight-legend-discount-price">
+                        <p class="homepage-catalogue-highlight-legend-discount-indicator">-12%</p>
+                        <strike class="homepage-catalogue-highlight-legend-originalprice">Rp 1.000.000</strike>
+                    </div>
+                    <h2>Rp.880.000 (First Month)</h2>
+            </div>
+
+    </div> 
+    <div class="homepage-catalogue-card">
+                <div class="homepage-catalogue-status-and-wishlist">
+                    <p class="homepage-catalogue-status">Boarding House</p>
+                    <div class="homepage-catalogue-wishlist-container">
+                        <img class="homepage-catalogue-wishlist-icon" src="./assetAOL/heart.png">
+                    </div>
+                </div>
+                <img src="./assetAOL/airbnb3.jpg" alt="" class="homepage-catalogue-card-image" >
+                <div class="homepage-catalogue-overview-section">
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/area.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>20 m<sup>2</sup></p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/wifi.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Wi-Fi</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/co-living.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Co-Living</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/clock-access.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>24 H Access</p>
+                    </div>
+                </div>
+                <div class="homepage-catalogue-highlights">
+                    <div class="homepage-catalogue-highlight-legend">
+                        <img src="./assetAOL/co-living.png" alt="">
+                        <span>Coliving • Rent</span>
+                    </div>
+                    <h3 class="homepage-catalogue-highlight-title">Kostan Indah Permata</h3>
+                    <p>Amsterdam, Bekasi</p>
+                    <div class="homepage-catalogue-highlight-legend-discount-price">
+                        <p class="homepage-catalogue-highlight-legend-discount-indicator">-12%</p>
+                        <strike class="homepage-catalogue-highlight-legend-originalprice">Rp 1.000.000</strike>
+                    </div>
+                    <h2>Rp.880.000 (First Month)</h2>
+            </div>
+
+    </div> 
+    <div class="homepage-catalogue-card">
+                <div class="homepage-catalogue-status-and-wishlist">
+                    <p class="homepage-catalogue-status">Boarding House</p>
+                    <div class="homepage-catalogue-wishlist-container">
+                        <img class="homepage-catalogue-wishlist-icon" src="./assetAOL/heart.png">
+                    </div>
+                </div>
+                <img src="./assetAOL/airbnb3.jpg" alt="" class="homepage-catalogue-card-image" >
+                <div class="homepage-catalogue-overview-section">
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/area.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>20 m<sup>2</sup></p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/wifi.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Wi-Fi</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/co-living.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>Co-Living</p>
+                    </div>
+                    <h1>|</h1>
+                    <div class="homepage-catalogue-overview-legend">
+                        <img src="./assetAOL/clock-access.png" alt="" class="homepage-catalogue-overview-legend-icon">
+                        <p>24 H Access</p>
+                    </div>
+                </div>
+                <div class="homepage-catalogue-highlights">
+                    <div class="homepage-catalogue-highlight-legend">
+                        <img src="./assetAOL/co-living.png" alt="">
+                        <span>Coliving • Rent</span>
+                    </div>
+                    <h3 class="homepage-catalogue-highlight-title">Kostan Indah Permata</h3>
+                    <p>Amsterdam, Bekasi</p>
+                    <div class="homepage-catalogue-highlight-legend-discount-price">
+                        <p class="homepage-catalogue-highlight-legend-discount-indicator">-12%</p>
+                        <strike class="homepage-catalogue-highlight-legend-originalprice">Rp 1.000.000</strike>
+                    </div>
+                    <h2>Rp.880.000 (First Month)</h2>
+            </div>
+</section>
+
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="main-footer">
+    <div class="footer-column">
+      <a href="homepage-2.html"><img src="./assetAOL/logo.png" alt="logo" class="footer-logo" /></a>
+      <div class="social-icons">
+        <a href="#"><img src="./assetAOL/facebook.png" alt="Facebook" /></a>
+        <a href="#"><img src="./assetAOL/instagram.png" alt="Instagram" /></a>
+        <a href="#"><img src="./assetAOL/linkedin.png" alt="LinkedIn" /></a>
+        <a href="#"><img src="./assetAOL/twitter.png" alt="Twitter" /></a>
+      </div>
+      <button class="contact-us-btn"><b>Contact Us</b></button>
+    </div>
+    <div class="footer-column">
+      <h4>Find Your Properties</h4>
+      <ul>
+        <li><a href="#">Property for Rent</a></li>
+        <li><a href="#">Property for Booking</a></li>
+        <li><a href="#">Book a hotel</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h4>Tempat Huni</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Product & Services</a></li>
+        <li><a href="#">Partner</a></li>
+        <li><a href="#">Career</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h4>Customer Service</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="copyright">
+      <p>Copyright © 2023. All rights reserved</p>
+    </div>
+  </footer>
+  <!-- SCRIPTS -->
+  <script src="header.js"></script> 
+  <script src="location2.js"></script> 
+</body>
+
+</html>

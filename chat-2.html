@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Kostan</title>
+  <link rel="stylesheet" href="chat.css">
+  <link rel="stylesheet" href="header.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="homepage-2.html" class="logo">
+          <img src="./assetAOL/logo.png" alt="Tempat Huni Logo" class="logo-icon">
+        </a>
+        <div class="search-container">
+          <img src='./assetAOL/bell.png' alt="Notifications" class="notification-icon">
+          <button class="filter-btn" id="filterBtn">
+            <img src="./assetAOL/location-red.png" alt="Filter" class="filter-icon">
+            Filter
+          </button>
+
+          <div class="modal-overlay" id="modalOverlay">
+            <div class="filter-modal">
+              <button class="close-btn" id="closeBtn">×</button>
+
+              <!-- Buy/Rent Toggle -->
+              <div class="toggle-container">
+                <button class="toggle-btn active" data-type="buy">Buy</button>
+                <button class="toggle-btn" data-type="rent">Rent</button>
+              </div>
+
+              <!-- Property Type -->
+              <div class="section-header">Property Type</div>
+              <div class="property-type-group">
+                <select class="property-type-select" id="propertyType">
+                  <option value="">Choose property type</option>
+                  <option value="house" selected>House</option>
+                  <option value="apartment">Apartment</option>
+                  <option value="villa">Villa</option>
+                  <option value="studio">Studio</option>
+                </select>
+              </div>
+
+              <!-- Filtered By -->
+              <div class="section-header">Filtered By</div>
+              <div class="radio-group">
+                <div class="radio-option">
+                  <input type="radio" id="popular" name="filter" value="popular" checked>
+                  <label for="popular">Most Popular</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="newest" name="filter" value="newest">
+                  <label for="newest">Newest Property</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="lowest" name="filter" value="lowest">
+                  <label for="lowest">Lowest Price</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="highest" name="filter" value="highest">
+                  <label for="highest">Highest Price</label>
+                </div>
+              </div>
+
+              <!-- Price Range -->
+              <div class="section-header">Price Range</div>
+              <div class="range-container">
+                <input type="text" class="range-input" placeholder="Rp. 0" id="minPrice">
+                <span class="range-separator">-</span>
+                <input type="text" class="range-input" placeholder="Rp. 0" id="maxPrice">
+              </div>
+
+              <!-- Square Feet -->
+              <div class="section-header">Square Feet</div>
+              <div class="range-container">
+                <input type="text" class="range-input" placeholder="m²" id="minSqft">
+                <span class="range-separator">-</span>
+                <input type="text" class="range-input" placeholder="m²" id="maxSqft">
+              </div>
+
+              <!-- Bedroom & Bathroom -->
+              <div class="counter-container">
+                <div class="counter-group">
+                  <label class="counter-label">Bedroom</label>
+                  <div class="counter-wrapper">
+                    <button class="counter-btn" id="bedroomMinus" data-target="bedroom">−</button>
+                    <input type="text" class="counter-display" id="bedroom" value="0" readonly>
+                    <button class="counter-btn" id="bedroomPlus" data-target="bedroom">+</button>
+                  </div>
+                </div>
+                <div class="counter-group">
+                  <label class="counter-label">Bathroom</label>
+                  <div class="counter-wrapper">
+                    <button class="counter-btn" id="bathroomMinus" data-target="bathroom">−</button>
+                    <input type="text" class="counter-display" id="bathroom" value="0" readonly>
+                    <button class="counter-btn" id="bathroomPlus" data-target="bathroom">+</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Facility -->
+              <div class="section-header">Facility</div>
+              <div class="checkbox-group">
+                <div class="checkbox-option">
+                  <input type="checkbox" id="garage" value="garage">
+                  <label for="garage">Garage</label>
+                </div>
+                <div class="checkbox-option">
+                  <input type="checkbox" id="pool" value="pool">
+                  <label for="pool">Swimming Pool</label>
+                </div>
+              </div>
+
+              <!-- Shared Facility (Only for Rent) -->
+              <div class="shared-facility-section" id="sharedFacilitySection" style="display: none;">
+                <div class="section-header">Shared Facility</div>
+                <div class="checkbox-group shared-facility-grid">
+                  <div class="checkbox-option">
+                    <input type="checkbox" id="kitchen" value="kitchen">
+                    <label for="kitchen">Kitchen</label>
+                  </div>
+                  <div class="checkbox-option">
+                    <input type="checkbox" id="refrigerator" value="refrigerator">
+                    <label for="refrigerator">Refrigerator</label>
+                  </div>
+                  <div class="checkbox-option">
+                    <input type="checkbox" id="wifi" value="wifi">
+                    <label for="wifi">WiFi</label>
+                  </div>
+                  <div class="checkbox-option">
+                    <input type="checkbox" id="sharedPool" value="sharedPool">
+                    <label for="sharedPool">Swimming Pool</label>
+                  </div>
+                  <div class="checkbox-option">
+                    <input type="checkbox" id="tv" value="tv">
+                    <label for="tv">TV</label>
+                  </div>
+                  <div class="checkbox-option">
+                    <input type="checkbox" id="sharedBathroom" value="sharedBathroom">
+                    <label for="sharedBathroom">Bathroom</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="action-buttons">
+                <button class="reset-btn" id="resetBtn">Reset All</button>
+                <button class="search-btn" id="searchBtn">Search</button>
+              </div>
+            </div>
+          </div>
+          <input type="text" class="search-input" placeholder="Where are you looking to stay or live?" id="searchInput">
+          <button class="search-btn" id="searchBtn">
+            <img src="./assetAOL/search.png" alt="Search" class="search-icon">
+          </button>
+        </div>
+        <a href="profile.html">
+          <img src="./assetAOL/profile.jpg" alt="Profile" class="profile-picture">
+        </a>
+
+      </div>
+    </div>
+  </header>
+  <div class="ccontainer">
+    <div class="chatarea">
+      <div class="chat-header">
+        <h2>Kostan Indah Permata</h2>
+        <p>Joanne Marcelina</p>
+      </div>
+      <div class="chat-body">
+        <div class="message left">
+          <img class="avatar" src="./assetAOL/haciiiik.jpg" alt="User Avatar">
+          <div class="message-text">What room are you interested in????</div>
+        </div>
+        <div class="message right">
+          <img class="avatar" src="./assetAOL/hci.jpg" alt="User Avatar">
+          <div class="message-text">B02</div>
+        </div>
+      </div>
+      <div class="chat-footer">
+        <input type="text" placeholder="Type a message...">
+        <button><img src="./assetAOL/emoji.png" alt=""></button>
+      </div>
+    </div>
+    <div class="sidebar">
+      <div class="chatlist">
+        <h3>CHAT</h3>
+        <div class="chatitem">
+          <img src="./assetAOL/haciiiik.jpg" alt="Avatar">
+          <div class="chatitem-info">
+            <strong>Kostan Indah Permata</strong>
+            <span>B02</span>
+          </div>
+        </div>
+        <div class="chatitem">
+          <img src="./assetAOL/fadila.jpg" alt="Avatar">
+          <div class="chatitem-info">
+            <strong>Apartemen Fadila</strong>
+            <span>On 12 floors</span>
+          </div>
+        </div>
+        <div class="chatitem">
+          <img src="./assetAOL/hciyay.jpg" alt="Avatar">
+          <div class="chatitem-info">
+            <strong>Kostan Kencana</strong>
+            <span>We have AC</span>
+          </div>
+        </div>
+        <div class="chatitem">
+          <img src="./assetAOL/hachuic.jpg" alt="Avatar">
+          <div class="chatitem-info">
+            <strong>Apartemen Indonesia</strong>
+            <span>Close to the Station</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="header.js"></script>
+</html>

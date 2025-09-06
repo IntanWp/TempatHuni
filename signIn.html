@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In - Teman Huni</title>
+    <link rel="stylesheet" href="signIn.css" />
+</head>
+
+<body>
+    <div class="outer-border">
+        <div class="container">
+            <div class="form-container">
+                <a href="homepage.html" class="BackToHome">
+                    <img src="./assetAOL/left-chevron.png" alt="Back-to-Home" />
+                    <p>HomePage</p>
+                </a>
+                <h2>Register to Teman Huni</h2>
+                <p>Join to Teman Huni so you will get a marvelous experience on finding your place to stay.</p>
+                <div class="tabs">
+                    <a href="signUp.html" class="tab">Sign Up</a>
+                    <button class="tab active">Sign In</button>
+                </div>
+
+                <form id="signin-form">
+                    <input type="tel" placeholder="Phone Number" required />
+                    <div class="password-container">
+                        <input type="password" id="password" placeholder="Password" required />
+                        <button type="button" class="password-toggle" onclick="togglePassword()">
+                            <img class="eye-icon" id="eye-visible" src="./assetAOL/visible.png" alt="Show password">
+                            <img class="eye-icon" id="eye-hidden" src="./assetAOL/eye.png" alt="Hide password" style="display: none;">
+                        </button>
+                    </div>
+                    <div class="error-message" id="password-error">Password is wrong!</div>
+                    <button type="submit" class="signin-btn">Sign In</button>
+                </form>
+
+                <div class="separator">or</div>
+
+                <button class="google-btn" onclick="redirectHome()"><img src="/assetAOL/google.png" alt=""> Sign In with Google</button>
+                <button class="facebook-btn" onclick="redirectHome()"><img src="./assetAOL/facebook-ori.png" alt=""> Sign In with Facebook</button>
+            </div>
+
+            <div class="image-container">
+                <img src="./assetAOL/rumah register login.png" alt="House" />
+            </div>
+        </div>
+    </div>
+    <script src="signIn.js"></script>
+</body>
+
+</html>

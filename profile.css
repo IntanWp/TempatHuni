@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap");
+
+:root{
+    --red : #A71F4B;
+    --pink:#fff6f8;
+    --white:#ffffff;
+    --gray :#333;
+}
+
+body {
+  font-family: "Merriweather", serif;
+  color: #4a4a4a;
+  font-size: 18px;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 0;
+    height: 100%;
+}
+
+
+.profile-container {
+    background: white;
+    max-width: 640px;
+    margin: 32px auto;
+    padding: 24px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.profile-container img{
+    height : 20px;
+}
+
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 16px;
+}
+
+.avatar {
+    background: #ddd;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-info h2 {
+    margin: 0;
+}
+
+.profile-info a {
+    font-size: 14px;
+    color: #333;
+}
+
+.profile-menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 24px;
+}
+
+.profile-menu li {
+    padding: 16px;
+    border-top: 1px solid #ccc;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.profile-menu a{
+    text-decoration: none;
+    color: #333;
+}
+
+.profile-menu.no-top-border li:first-child {
+    border-top: none;
+}
+
+.profile-menu .bottom-border {
+    border-bottom: 1px solid #ccc;
+}
+
+.logout-container {
+    text-align: center;
+    margin-top: 32px;
+}
+
+.logout-btn {
+    background: var(--red);
+    color: white;
+    border: none;
+    padding: 14px 60px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
